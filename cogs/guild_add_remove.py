@@ -19,5 +19,14 @@ class BotJoin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
+        data = database_handler.get_channel(guild.id)
+        if data is None:
+            return
+        chan = guild.get_channel(data["channel_id"])
+        try:
+            msg = await chan.fetch_message(data["message_id"])
+            await msg.delete()
+        except Exception as e:
+            print(e)
         database_handler.remove_channel(guild.id)
         database_handler.remove_all_instructions(guild.id)

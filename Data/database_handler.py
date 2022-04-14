@@ -52,22 +52,25 @@ class DataBaseHandler():
         self.con.commit() 
         cursor.close()
 
-    def add_instruction(self, guild_id: int, instruction: str):
+    def add_instruction(self, guild_id: int, instruction: str, priority: int):
         cursor = self.con.cursor()
-        query = "INSERT INTO instruction(guild_id, instruction) VALUES (?, ?);"
-        cursor.execute(query, (guild_id, instruction))
+        query = "INSERT INTO instruction(guild_id, instruction, priority) VALUES (?, ?, ?);"
+        cursor.execute(query, (guild_id, instruction, priority))
         self.con.commit() 
         cursor.close()
 
     def get_all_instructions(self, guild_id: int):
         cursor = self.con.cursor()
-        query = "SELECT * FROM instruction WHERE guild_id = ? ORDER BY priority;"
+        query = "SELECT * FROM instruction WHERE guild_id = ? ORDER BY priority DESC;"
         cursor.execute(query, (guild_id,))
         result = cursor.fetchall()
         cursor.close()
         r = []
-        for i in result:
-            r.append(i["instruction"])
+        for elem in result:
+            a = {}
+            for i in elem.keys():
+                a[i] = elem[i]
+            r.append(a)
         return r
 
     def remove_instruction(self, guild_id: int, id: int):

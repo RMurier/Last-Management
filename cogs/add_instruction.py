@@ -33,15 +33,34 @@ class AddInstruction(commands.Cog):
     async def _add_instruction(self, ctx, name, priority):
         if not database_handler.channel_exist(ctx.guild.id):
             return await ctx.send("You don't have any channel. Please, type /setup to setup your channel.", hidden=True)
+        database_handler.add_instruction(ctx.guild.id, name, priority)
         data = database_handler.get_channel(ctx.guild.id)
         chan = ctx.guild.get_channel(data["channel_id"])
         try:
-            instructions = database_handler.get_instructions(ctx.guild.id)
-            print(instructions)
+            instructions = database_handler.get_all_instructions(ctx.guild.id)
             mess = await chan.fetch_message(data["message_id"])
             msg = discord.Embed(title="Last Management", description="Your management :", color=0x00ff00)
             for elem in instructions:
-                msg.add_field(name=f"Priority: {elem['priority']}", value=elem["name"], inline=False)
+                msg.add_field(name=f"`{elem['ID']}` Priority: {elem['priority']}", value=elem["instruction"], inline=False)
             await mess.edit(embed=msg)
+            await ctx.send("Done !", hidden=True)
         except Exception as e:
-            return await ctx.send(e)        
+            return await ctx.send(e) 
+
+
+    @cog_ext.cog_slash(name = "reload", description="Reload the bot", guild_ids=[778020762313424976, 923226734558584862])
+    async def _reload(self, ctx):
+        if not database_handler.channel_exist(ctx.guild.id):
+            return await ctx.send("You don't have any channel. Please, type /setup to setup your channel.", hidden=True)
+        data = database_handler.get_channel(ctx.guild.id)
+        chan = ctx.guild.get_channel(data["channel_id"])
+        try:
+            instructions = database_handler.get_all_instructions(ctx.guild.id)
+            mess = await chan.fetch_message(data["message_id"])
+            msg = discord.Embed(title="Last Management", description="Your management :", color=0x00ff00)
+            for elem in instructions:
+                msg.add_field(name=f"`{elem['ID']}` Priority: {elem['priority']}", value=elem["instruction"], inline=False)
+            await mess.edit(embed=msg)
+            await ctx.send("Done !", hidden=True)
+        except Exception as e:
+            return await ctx.send(e) 

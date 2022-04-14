@@ -20,7 +20,12 @@ class Setup(commands.Cog):
     ])
     async def _setup(self, ctx, channel):
         msg = discord.Embed(title="Last Management", description="Your management :", color=0x00ff00)
-        msg.add_field(name="_ _", value="No instructions yet", inline=False)
+        instructions = database_handler.get_all_instructions(ctx.guild.id)
+        if len(instructions) > 0:
+            for elem in instructions:
+                msg.add_field(name=f"`{elem['ID']}` Priority: {elem['priority']}", value=elem["instruction"], inline=False)
+        else:
+            msg.add_field(name="_ _", value="No instructions yet", inline=False)
         msg = await channel.send(embed=msg)
         await ctx.send("Done !", hidden=True)
         await msg.pin()
@@ -31,6 +36,7 @@ class Setup(commands.Cog):
                 mess = await chan.fetch_message(data["message_id"])
                 await mess.delete()
             except Exception as e:
+                print(e)
                 await ctx.send(e)
             return database_handler.edit_channel(ctx.guild.id, channel.id, msg.id)
         return database_handler.add_channel(ctx.guild.id, channel.id, msg.id)
