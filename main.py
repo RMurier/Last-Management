@@ -1,8 +1,6 @@
 import discord
-from discord.ext import tasks, commands
+from discord.ext import commands
 from discord_slash import SlashCommand
-from discord_slash.utils.manage_commands import create_option, create_choice, create_permission
-from discord_slash.model import SlashCommandPermissionType
 import os
 import dotenv
 
