@@ -14,6 +14,7 @@ class AddInstruction(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.has_permissions(administrator=True)
     @cog_ext.cog_slash(name = "delete_instruction", description="Delete an instruction", guild_ids=[778020762313424976, 923226734558584862], options=[
         create_option(name="id", description="The ID of the instruction (at the left of the priority)", option_type=4, required=True),
     ])
@@ -32,4 +33,5 @@ class AddInstruction(commands.Cog):
             await mess.edit(embed=msg)
             await ctx.send("Done !", hidden=True)
         except Exception as e:
+            print(e)
             return await ctx.send(e) 

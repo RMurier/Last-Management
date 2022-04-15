@@ -14,7 +14,7 @@ class Setup(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # @commands.has_guild_permissions(administrator=True)
+    @commands.has_permissions(administrator=True)
     @cog_ext.cog_slash(name = "setup", description="Setup the bot", guild_ids=[778020762313424976, 923226734558584862], options=[
         create_option(name="channel", description="Channel where le manager wrote", option_type=7, required=True)
     ])
