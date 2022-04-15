@@ -15,7 +15,7 @@ class AddInstruction(commands.Cog):
         self.bot = bot
         
     @commands.has_permissions(administrator=True)
-    @cog_ext.cog_slash(name = "add_instruction", description="Add an instruction", guild_ids=[778020762313424976, 923226734558584862], options=[
+    @cog_ext.cog_slash(name = "add_instruction", description="Add an instruction", options=[
         create_option(name="name", description="The name of the instruction", option_type=3, required=True),
         create_option(name="priority", description="The priority of the instruction (10 = hight, 0 = low)", option_type=4, required=True, choices=[
             create_choice(name="0", value=0),

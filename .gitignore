@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+# Developper variables
+.env
+
 # C extensions
 *.so
 

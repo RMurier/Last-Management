@@ -15,7 +15,7 @@ class AddInstruction(commands.Cog):
         self.bot = bot
 
     @commands.has_permissions(administrator=True)
-    @cog_ext.cog_slash(name = "delete_instruction", description="Delete an instruction", guild_ids=[778020762313424976, 923226734558584862], options=[
+    @cog_ext.cog_slash(name = "delete_instruction", description="Delete an instruction", options=[
         create_option(name="id", description="The ID of the instruction (at the left of the priority)", option_type=4, required=True),
     ])
     async def _add_instruction(self, ctx, id):
