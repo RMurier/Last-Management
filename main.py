@@ -17,7 +17,7 @@ slash = SlashCommand(bot, sync_commands = True, sync_on_cog_reload = True, delet
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
 
-dontcharge = ["errors.py"]
+dontcharge = []
 for filename in os.listdir("./cogs"):
 	if filename not in dontcharge and filename.endswith(".py"):
 		try:
