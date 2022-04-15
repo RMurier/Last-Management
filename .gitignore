@@ -5,6 +5,9 @@ __pycache__/
 # Developper variables
 .env
 
+# Database
+*.db
+
 # C extensions
 *.so
 
