@@ -8,7 +8,8 @@ intents = discord.Intents.all()
 
 dotenv.load_dotenv()
 
-bot = commands.Bot(intents=intents, case_insensitive=True, max_messages=None, status=discord.Status.online, activity=discord.Game(name="to help you"))
+bot = commands.Bot(intents=intents, command_prefix="/", case_insensitive=True, max_messages=None, status=discord.Status.online, activity=discord.Game(name="to help you"))
+bot.remove_command("help")
 slash = SlashCommand(bot, sync_commands = True, sync_on_cog_reload = True, delete_from_unused_guilds = True)
 
 @bot.event
